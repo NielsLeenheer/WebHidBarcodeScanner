@@ -1,7 +1,6 @@
 {
   "name": "webhid-barcode-scanner",
   "version": "1.0.0",
-  "main": "dist/webhid-barcode-scanner.cjs.js",
   "module": "dist/webhid-barcode-scanner.esm.js",
   "browser": "dist/webhid-barcode-scanner.umd.js",
   "repository": {
