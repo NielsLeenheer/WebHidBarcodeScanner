@@ -149,9 +149,10 @@ class WebHIDBarcodeScanner {
 		this._internal.device = device;
 
 		this._internal.emitter.emit('connected', {
-			vendorId:       device.vendorId,
-			productId:      device.productId,
-			productName:    device.productName
+			type:		  'hid',
+			vendorId:     device.vendorId,
+			productId:    device.productId,
+			productName:  device.productName
 		});
 	}
 
