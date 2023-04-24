@@ -1,11 +1,18 @@
 {
   "name": "webhid-barcode-scanner",
   "version": "1.0.0",
-  "module": "dist/webhid-barcode-scanner.esm.js",
-  "browser": "dist/webhid-barcode-scanner.umd.js",
+  "type": "module",
+  "exports": {
+      "browser": {
+          "import": "./dist/webhid-barcode-scanner.esm.js",
+          "require": "./dist/webhid-barcode-scanner.umd.js",
+          "script": "./dist/webhid-barcode-scanner.umd.js"
+      }
+  },
+  "module": "src/main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NielsLeenheer/WebHIDBarcodeScanner.git"
+    "url": "git+https://github.com/NielsLeenheer/WebHidBarcodeScanner.git"
   },
   "keywords": [
     "hid",
@@ -18,13 +25,14 @@
   "author": "Niels Leenheer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NielsLeenheer/WebHIDBarcodeScanner/issues"
+    "url": "https://github.com/NielsLeenheer/WebHidBarcodeScanner/issues"
   },
-  "homepage": "https://github.com/NielsLeenheer/WebHIDBarcodeScanner#readme",
+  "homepage": "https://github.com/NielsLeenheer/WebHidBarcodeScanner#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^11.0.1",
-    "@rollup/plugin-node-resolve": "^7.0.0",
-    "rollup": "^1.29.0"
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
+    "rollup": "^3.20.7"
   },
   "scripts": {
     "build": "rollup -c",

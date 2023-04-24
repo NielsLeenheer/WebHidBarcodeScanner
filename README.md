@@ -1,18 +1,18 @@
-# webhid-barcode-scanner
+# WebHidBarcodeScanner
 
 This is an library that allows you to use a HoneyWell Voyager 1400g (and perhaps others) barcode scanners in HID mode using WebHID. 
 
-### What does this library do?
+## What does this library do?
 
 By default most barcode scanners emulate a keyboard meaning all numbers and letters of a barcode will be individually 'typed' by the barscanner. This means you either have to focus an input field before scanning, or you have to use global keyboard events and build some algorithm that can seperate out digits from barcodes from other digits that are being typed on the keyboard. 
 
 This library uses WebHID to connect to the scanner and set the scanner in HID mode, which allows us to receive the barcodes in one event.
 
-### How to use it?
+## How to use it?
 
 Load the `webhid-barcode-scanner.umd.js` file in the browser and instantiate a `WebHIDBarcodeScanner` object. 
 
-    <script src='webhid-barcode-scanner.umd.js></script>
+    <script src='webhid-barcode-scanner.umd.js'></script>
 
     <script>
 
@@ -28,8 +28,7 @@ Or import the `webhid-barcode-scanner.esm.js` module:
     const barcodeScanner = new WebHIDBarcodeScanner();
 
 
-
-### Connect to a scanner
+## Connect to a scanner
 
 The first time you have to manually connect to the barcode scanner by calling the `connect()` function. This function must be called as the result of an user action, for example clicking a button. You cannot call this function on page load.
 
@@ -53,6 +52,8 @@ To find out when a barcode scanner is connected you can listen for the `connecte
 
 The callback of the `connected` event is passed an object with the following properties:
 
+-   `type`<br>
+    Type of the connection that is used, in this case it is always `hid`.
 -   `vendorId`<br>
     In case of a USB HID barcode scanner, the USB vendor ID.
 -   `productId`<br>
@@ -66,6 +67,10 @@ To find out when a barcode scanner is disconnected you can listen for the `disco
         console.log(`Disconnected`);
     });
 
+
+## Events
+
+Once connected you can use listen for the following events to receive data from the barcode scanner.
 
 ### Scanning barcodes
 
@@ -84,6 +89,6 @@ The callback is passed an object with the following properties:
 -   `symbology`<br>
     Optionally a library specific identifier of the symbology. 
 
-### License
+## License
 
 MIT
