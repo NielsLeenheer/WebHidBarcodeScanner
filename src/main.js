@@ -1,7 +1,7 @@
 import EventEmitter from './event-emitter.js';
 
 const DeviceIds = [
-	{ vendorId: 0x0c2e, productId: 0x0b8f },	/* Honeywell Voyager 1400g */
+	{ vendorId: 0x0c2e },	/* Honeywell Barcode Scanner */
 ]
 
 

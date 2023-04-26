@@ -7,7 +7,7 @@ export default [
 	{
 		input: 'src/main.js',
 		output: {
-			name: 'WebHidBarcodeScanner',
+			name: 'WebHIDBarcodeScanner',
 			file: 'dist/webhid-barcode-scanner.umd.js',
 			format: 'umd'
 		},
