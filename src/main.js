@@ -66,6 +66,18 @@ class WebHIDBarcodeScanner {
 		});
 	}
 
+	async disconnect() {
+		if (!this._internal.device) {
+			return;
+		}
+
+		await this._internal.device.close();
+
+		this._internal.device = null;
+
+		this._internal.emitter.emit('disconnected');
+	}
+
 	async open(device) {
 		await device.open();
 
