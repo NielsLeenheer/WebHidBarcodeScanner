@@ -42,12 +42,19 @@ Subsequent times you can simply call the `reconnect()` function. This will try t
 
 If there are no barcode scanners connected that have been previously connected, this function will do nothing.
 
+If you have multiple barcode scanners connected and want to reconnect with a specific one, you can provide an object with a vendor id and product id. You can get the vendor id and product id by listening to the `connected` event and store it for later use. Unfortunately this will only work for USB HID devices. 
+
+    barcodeScanner.reconnect(lastUsedDevice);
+
 However, this library will actively look for new devices being connected. So if you connect a previously connected barcode scanner, it will immediately become available.
 
 To find out when a barcode scanner is connected you can listen for the `connected` event using the `addEventListener()` function.
 
     barcodeScanner.addEventListener('connected', device => {
         console.log(`Connected to ${device.productName}`);
+
+        /* Store device for reconnecting */
+        lastUsedDevice = device;
     });
 
 The callback of the `connected` event is passed an object with the following properties:

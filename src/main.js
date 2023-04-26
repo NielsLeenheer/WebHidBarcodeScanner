@@ -48,21 +48,26 @@ class WebHIDBarcodeScanner {
 		}
 	}
 
-	async reconnect() {
-		const devices = await navigator.hid.getDevices();
+	async reconnect(previousDevice) {
+		let devices = await navigator.hid.getDevices();
 		
-		devices.forEach(async (device) => {
-			let allowed = DeviceIds.some(filter => filter.vendorId == device.vendorId && (!filter.productId || filter.productId == device.productId))
-			
-			if (allowed) {
-				/* Check if the device acts as a barcode scanner */
-								
-				let collection = device.collections.some(c => c.usage == 2 && c.usagePage == 140);
+		if (previousDevice.vendorId && previousDevice.productId) {
+            devices = devices.filter(device => {
+                return device.vendorId == previousDevice.vendorId && device.productId == previousDevice.productId;
+            });
+        }
+        else {
+            devices = devices.filter(device => {
+                return DeviceIds.some(filter => filter.vendorId == device.vendorId && (!filter.productId || filter.productId == device.productId));
+            });
+        }
 
-				if (collection) {
-					await this.open(device);
-				}
-			}
+		devices.forEach(async (device) => {
+            let collection = device.collections.some(c => c.usage == 2 && c.usagePage == 140);
+
+            if (collection) {
+                await this.open(device);
+            }
 		});
 	}
 
@@ -148,7 +153,7 @@ class WebHIDBarcodeScanner {
 					    buffer += String.fromCharCode(data.getUint8(i + 4));
                     }
 				}
-				
+
 				let final = ! data.getUint8(62);
 
 				if (final) {
