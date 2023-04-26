@@ -52,7 +52,7 @@ class WebHIDBarcodeScanner {
 		const devices = await navigator.hid.getDevices();
 		
 		devices.forEach(async (device) => {
-			let allowed = DeviceIds.some(filter => filter.vendorId == device.vendorId && filter.productId == device.productId)
+			let allowed = DeviceIds.some(filter => filter.vendorId == device.vendorId && (!filter.productId || filter.productId == device.productId))
 			
 			if (allowed) {
 				/* Check if the device acts as a barcode scanner */
