@@ -141,10 +141,14 @@ class WebHIDBarcodeScanner {
 					}
 				}
 
-				for (let i = 0; i < length - 1; i++) {
-					buffer += String.fromCharCode(data.getUint8(i + 4))
-				}
+				for (let i = 0; i < length; i++) {
+                    let character = data.getUint8(i + 4);
 
+                    if (character != 0x0d) {
+					    buffer += String.fromCharCode(data.getUint8(i + 4));
+                    }
+				}
+				
 				let final = ! data.getUint8(62);
 
 				if (final) {
