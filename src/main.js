@@ -112,8 +112,6 @@ class WebHIDBarcodeScanner {
     inputreport(event) {
         const { data, device, reportId } = event;
 	
-        console.log('inputreport', data);
-        
         if (reportId === 0x02) {
             let symbology = null;
 
