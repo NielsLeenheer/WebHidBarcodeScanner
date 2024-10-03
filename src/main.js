@@ -7,11 +7,16 @@ const DeviceIds = [
 
 class WebHIDBarcodeScanner {
 
-	constructor() {
+	constructor(options) {
+        this._options = Object.assign({
+            debug: false
+        }, options || {})
+
         this._internal = {
             emitter:        new EventEmitter(),
             inputreport:    this.inputreport.bind(this),
             buffer:         '',
+            reports:        [],
             device:         null,
         };
 
@@ -115,6 +120,8 @@ class WebHIDBarcodeScanner {
         if (reportId === 0x02) {
             let symbology = null;
 
+            this._internal.reports.push(new Uint8Array(data.buffer));
+
             let length = data.getUint8(0);
             let aim = String.fromCharCode(data.getUint8(1)) + String.fromCharCode(data.getUint8(2)) + String.fromCharCode(data.getUint8(3));
 
@@ -170,12 +177,19 @@ class WebHIDBarcodeScanner {
             let final = ! data.getUint8(62);
 
             if (final) {
-                this._internal.emitter.emit('barcode', {
+                let result = {
                     aim, symbology, 
                     value:  this._internal.buffer
-                });
+                };
+
+                if (this._options.debug) {
+                    result.reports = this._internal.reports;
+                }
+
+                this._internal.emitter.emit('barcode', result);
 
                 this._internal.buffer = '';
+                this._internal.reports = [];
             }
         }
     }
