@@ -1,5 +1,5 @@
 {
-  "name": "webhid-barcode-scanner",
+  "name": "@point-of-sale/webhid-barcode-scanner",
   "version": "1.0.0",
   "type": "module",
   "exports": {
