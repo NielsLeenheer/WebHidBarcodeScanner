@@ -1,61 +1,89 @@
 # WebHidBarcodeScanner
 
-This is an library that allows you to use a HoneyWell Voyager 1400g (and perhaps others) barcode scanners in HID mode using WebHID. 
+This is an library that allows you to use a Honeywell (and perhaps other manufacturers) barcode scanners in HID mode using WebHID. 
+
+<br>
+
+[![npm](https://img.shields.io/npm/v/@point-of-sale/webhid-barcode-scanner)](https://www.npmjs.com/@point-of-sale/webhid-barcode-scanner)
+![GitHub License](https://img.shields.io/github/license/NielsLeenheer/WebHidBarcodeScanner)
+
+
+> This library is part of [@point-of-sale](https://point-of-sale.dev), a collection of libraries for interfacing browsers and Node with Point of Sale devices such as receipt printers, barcode scanners and customer facing displays.
+
+<br>
 
 ## What does this library do?
 
 By default most barcode scanners emulate a keyboard meaning all numbers and letters of a barcode will be individually 'typed' by the barscanner. This means you either have to focus an input field before scanning, or you have to use global keyboard events and build some algorithm that can seperate out digits from barcodes from other digits that are being typed on the keyboard. 
 
+This is error-prone and slow, but some barcode scanners can also be used in HID mode.
+
+Depending on the model and manufacturer you might first need to scan a special configuration barcode to enable this mode. See the documentation of your barcode scanner for more information.
+
 This library uses WebHID to connect to the scanner and set the scanner in HID mode, which allows us to receive the barcodes in one event.
+
+<br>
 
 ## How to use it?
 
 Load the `webhid-barcode-scanner.umd.js` file in the browser and instantiate a `WebHIDBarcodeScanner` object. 
 
-    <script src='webhid-barcode-scanner.umd.js'></script>
+```html
+<script src='webhid-barcode-scanner.umd.js'></script>
 
-    <script>
-
-        const barcodeScanner = new WebHIDBarcodeScanner();
-
-    </script>
-
-
-Or import the `webhid-barcode-scanner.esm.js` module:
-
-    import WebHIDBarcodeScanner from 'webhid-barcode-scanner.esm.js';
+<script>
 
     const barcodeScanner = new WebHIDBarcodeScanner();
 
+</script>
+```
+
+Or import the `webhid-barcode-scanner.esm.js` module:
+
+```js
+import WebHIDBarcodeScanner from 'webhid-barcode-scanner.esm.js';
+
+const barcodeScanner = new WebHIDBarcodeScanner();
+```
+
+<br>
 
 ## Connect to a scanner
 
 The first time you have to manually connect to the barcode scanner by calling the `connect()` function. This function must be called as the result of an user action, for example clicking a button. You cannot call this function on page load.
 
-    function handleConnectButtonClick() {
-        barcodeScanner.connect();
-    }
+```js
+function handleConnectButtonClick() {
+    barcodeScanner.connect();
+}
+```
 
 Subsequent times you can simply call the `reconnect()` function. This will try to find any previously connected barcode scanners and will try to connect again. It is recommended to call this button on page load to prevent having to manually connect to a previously connected device.
 
-    barcodeScanner.reconnect();
+```js
+barcodeScanner.reconnect();
+```
 
 If there are no barcode scanners connected that have been previously connected, this function will do nothing.
 
 If you have multiple barcode scanners connected and want to reconnect with a specific one, you can provide an object with a vendor id and product id. You can get the vendor id and product id by listening to the `connected` event and store it for later use. Unfortunately this will only work for USB HID devices. 
 
-    barcodeScanner.reconnect(lastUsedDevice);
+```js
+barcodeScanner.reconnect(lastUsedDevice);
+```
 
 However, this library will actively look for new devices being connected. So if you connect a previously connected barcode scanner, it will immediately become available.
 
 To find out when a barcode scanner is connected you can listen for the `connected` event using the `addEventListener()` function.
 
-    barcodeScanner.addEventListener('connected', device => {
-        console.log(`Connected to ${device.productName}`);
+```js
+barcodeScanner.addEventListener('connected', device => {
+    console.log(`Connected to ${device.productName}`);
 
-        /* Store device for reconnecting */
-        lastUsedDevice = device;
-    });
+    /* Store device for reconnecting */
+    lastUsedDevice = device;
+});
+```
 
 The callback of the `connected` event is passed an object with the following properties:
 
@@ -70,10 +98,13 @@ The callback of the `connected` event is passed an object with the following pro
 
 To find out when a barcode scanner is disconnected you can listen for the `disconnected` event using the `addEventListener()` function.
 
-    barcodeScanner.addEventListener('disconnected', () => {
-        console.log(`Disconnected`);
-    });
+```js
+barcodeScanner.addEventListener('disconnected', () => {
+    console.log(`Disconnected`);
+});
+```
 
+<br>
 
 ## Events
 
@@ -83,9 +114,11 @@ Once connected you can use listen for the following events to receive data from 
 
 Whenever the libary detects a barcode, it will send out a `barcode` event that you can listen for.
 
+```js
 barcodeScanner.addEventListener('barcode', e => {
     console.log(`Found barcode ${e.value} with symbology ${e.symbology}`);
 });
+```
 
 The callback is passed an object with the following properties:
 
@@ -96,6 +129,12 @@ The callback is passed an object with the following properties:
 -   `symbology`<br>
     Optionally a library specific identifier of the symbology. 
 
-## License
+<br>
 
-MIT
+-----
+
+<br>
+
+This library has been created by Niels Leenheer under the [MIT license](LICENSE). Feel free to use it in your products. The  development of this library is sponsored by Salonhub.
+
+<a href="https://salohub.nl"><img src="https://salonhub.nl/assets/images/salonhub.svg" width=140></a>
