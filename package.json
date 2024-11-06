@@ -1,6 +1,6 @@
 {
   "name": "@point-of-sale/webhid-barcode-scanner",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "exports": {
     "browser": {
@@ -42,6 +42,6 @@
     "dist"
   ],
   "dependencies": {
-    "@point-of-sale/barcode-parser": "^1.0.0"
+    "@point-of-sale/barcode-parser": "^1.0.1"
   }
 }
