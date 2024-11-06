@@ -1,6 +1,6 @@
 # WebHidBarcodeScanner
 
-This is an library that allows you to use a Honeywell (and perhaps other manufacturers) barcode scanners in HID mode using WebHID. 
+This is an library that allows you to use a Honeywell, Zebra or DataLogic (and perhaps other manufacturers) barcode scanners in HID POS mode using WebHID. 
 
 <br>
 
@@ -103,6 +103,12 @@ barcodeScanner.addEventListener('disconnected', () => {
     console.log(`Disconnected`);
 });
 ```
+
+If the barcode scanner is a supported device, but it is not in HID POS mode, the library will emit a `unsupported` event. That means you need to reconfigure your scanner to change to a different connection mode. Usually you can do this by scanning a configuration barcode from the manual of your barcode scanner. The mode you need for this library is HID POS mode. 
+
+Alternatively you can configure the scanner to use HID Keyboard emulation or Serial emulation, but then you need to use [KeyboardBarcodeScanner](https://github.com/NielsLeenheer/KeyboardBarcodeScanner) or [WebSerialBarcodeScanner](https://github.com/NielsLeenheer/WebSerialBarcodeScanner) instead.
+
+For Honeywell scanners you do not need to do this, they can be automatically switched over to HID POS mode.
 
 <br>
 
