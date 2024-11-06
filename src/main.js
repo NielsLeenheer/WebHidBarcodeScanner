@@ -1,5 +1,5 @@
 import EventEmitter from './event-emitter.js';
-import { Aim } from '@point-of-sale/barcode-parser';
+import { Aim, GS1 } from '@point-of-sale/barcode-parser';
 
 
 const DeviceIds = [
@@ -247,6 +247,13 @@ class WebHIDBarcodeScanner {
                     if (symbology) {
                         result.symbology = symbology;
                     }
+                }
+
+                /* Decode GS1 data */
+
+                let parsed = GS1.parse(result);
+                if (parsed) {
+                    result.data = parsed;
                 }
 
                 /* Emit the barcode if it is allowed */

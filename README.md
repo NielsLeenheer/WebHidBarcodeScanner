@@ -64,6 +64,17 @@ const barcodeScanner = new WebHIDBarcodeScanner({
 
 This will allow all EAN and UPC barcodes. But also QR-codes because the retail industry is moving to the QR code based GS Digital Links in the coming years. These digital links contain an URL and can be used by consumers to read more about the product they are buying or have bought. But it also includes the Global Trade Identification Number (GTIN) that is also used by EAN and UPC barcodes. 
 
+If we find GS1 data such as the GTIN in the scanned barcode we will automatically decode it and place it in the data property:
+
+```js
+barcodeScanner.addEventListener('barcode', e => {
+    if (e.data?.gtin) {
+        console.log(`Found barcode with GTIN ${e.data.gtin}`);
+    }
+});
+```
+
+
 <br>
 
 ## Connect to a scanner
