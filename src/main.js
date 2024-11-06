@@ -249,7 +249,13 @@ class WebHIDBarcodeScanner {
                     }
                 }
 
-                this.#internal.emitter.emit('barcode', result);
+                /* Emit the barcode if it is allowed */
+
+                if (this.#options.allowedSymbologies.length === 0 ||
+                    this.#options.allowedSymbologies.includes(result.symbology)) 
+                {
+                    this.#internal.emitter.emit('barcode', result);
+                }
 
                 this.#internal.buffer = '';
                 this.#internal.reports = [];
