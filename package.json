@@ -1,6 +1,6 @@
 {
   "name": "@point-of-sale/webhid-barcode-scanner",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "exports": {
     "browser": {
@@ -36,12 +36,13 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "rollup -c -w",
+    "link": "npm link @point-of-sale/barcode-parser"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@point-of-sale/barcode-parser": "^1.0.1"
+    "@point-of-sale/barcode-parser": "^1.0.3"
   }
 }
